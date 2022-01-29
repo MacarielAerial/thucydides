@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 spacy = "*"
 dataclasses-json = "*"
+torch = "*"
+transformers = "*"
+pandas = "*"
+numpy = "*"
 
 [dev-packages]
 black = "==21.12b0"

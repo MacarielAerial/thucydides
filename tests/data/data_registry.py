@@ -15,3 +15,7 @@ PATH_NEWS_JSONL_UNTYPED_OUTPUT: Path = (
 # NewsJSONL
 PATH_NEWS_JSONL_OUTPUT: Path = Path("tests") / "data" / "output" / "news_jsonl.json"
 PATH_NEWS_JSONL: Path = Path("tests") / "data" / "unit" / "news_jsonl.json"
+
+# DataFrame
+PATH_PANDAS_JSON_OUTPUT: Path = Path("tests") / "data" / "output" / "pandas_json.json"
+PATH_PANDAS_JSON: Path = Path("tests") / "data" / "unit" / "pandas_json.json"
