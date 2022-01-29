@@ -8,7 +8,7 @@ spacy = "*"
 dataclasses-json = "*"
 
 [dev-packages]
-black = "==19.10b0"
+black = "==21.12b0"
 isort = "*"
 yamllint = "*"
 flake8 = "*"
@@ -17,7 +17,6 @@ pytest = "*"
 pytest-cov = "*"
 wheel = "*"
 twine = "*"
-pipenv-setup = "*"
 setuptools = "*"
 
 [requires]
