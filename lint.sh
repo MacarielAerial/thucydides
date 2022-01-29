@@ -22,6 +22,4 @@ flake8 .
 
 echo "Checking Python types..."
 mypy thucydides
-
-echo "Testing..."
-pytest
+mypy tests

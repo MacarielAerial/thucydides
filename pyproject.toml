@@ -1,0 +1,18 @@
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 88
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+addopts = "--cov=thucydides --cov-branch --cov-report=html --cov-report=term-missing:skip-covered --cov-report=xml --no-cov-on-fail --junitxml=test_report.xml --cov-fail-under=20"
+
+[tool.mypy]
+disallow_untyped_defs = true
+disallow_any_unimported = true
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true
+show_error_codes = true

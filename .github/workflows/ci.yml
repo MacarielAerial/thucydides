@@ -1,0 +1,23 @@
+name: thucydides
+
+on:  # yamllint disable-line rule:truthy
+  - push
+
+jobs:
+
+  build:
+    container: cariad/ci:1.0.0
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python environment
+        run: pipenv sync --dev
+
+      - name: Lint Python code
+        run: pipenv run ./lint.sh
+
+      - name: Test
+        run: pipenv run ./test.sh

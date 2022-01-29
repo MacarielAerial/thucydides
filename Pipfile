@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 spacy = "*"
+dataclasses-json = "*"
 
 [dev-packages]
 black = "==19.10b0"
@@ -17,6 +18,7 @@ pytest-cov = "*"
 wheel = "*"
 twine = "*"
 pipenv-setup = "*"
+setuptools = "*"
 
 [requires]
 python_version = "3.9"
