@@ -4,7 +4,7 @@ import json
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
+from typing import Any, Dict, List
 
 from dataclasses_json import dataclass_json
 
@@ -60,3 +60,31 @@ class NewsJSON:
 @dataclass
 class NewsJSONL:
     list_news_json: List[NewsJSON]
+
+    @classmethod
+    def from_news_jsonl_untyped(
+        cls, news_jsonl_untyped: List[Dict[str, Any]]
+    ) -> NewsJSONL:
+        """Constructs the dataclass from
+        a list of arbitrary dictionaries loaded from a jsonl file"""
+        # Initiate the result object
+        news_jsonl = NewsJSONL(list_news_json=[])
+
+        # Iterate over the list of dictionaries to construct NewsJSON objects
+        for news_json_untyped in news_jsonl_untyped:
+            news_json = NewsJSON(
+                id=news_json_untyped["id"],
+                source=news_json_untyped["source"],
+                publish_date=news_json_untyped["publishDate"],
+                title=news_json_untyped["title"],
+                body=news_json_untyped["body"],
+            )
+            news_jsonl.list_news_json.append(news_json)
+
+        log.info(
+            f"Initiated a {NewsJSONL.__class__} object with "
+            f"{len(news_jsonl.list_news_json)} {NewsJSON.__class__} objects "
+            f"from a list of dictionaries loaded from a jsonl file"
+        )
+
+        return news_jsonl

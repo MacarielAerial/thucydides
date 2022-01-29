@@ -17,6 +17,13 @@ def jsons_to_jsonl(paths_json: List[Path], path_jsonl: Path) -> None:
             output_jsonl.append(a_json)
 
     # Write these python dictionaries into one single file
+    if path_jsonl.is_file():
+        log.warning(
+            f"{path_jsonl} already exists as a file. "
+            f"Deleting it before replacing it with the result of the current run"
+        )
+        path_jsonl.unlink()
+
     with open(path_jsonl, "w") as f:
         for a_json in output_jsonl:
             json.dump(a_json, f)
@@ -26,3 +33,38 @@ def jsons_to_jsonl(paths_json: List[Path], path_jsonl: Path) -> None:
         f"Concatenated {len(output_jsonl)} JSON files "
         f"and exported the result to {path_jsonl}"
     )
+
+
+if __name__ == "__main__":
+    """
+    Example usage:
+    pipenv run python -m thucydides.nodes.io \
+    -jsons data/01_raw/news-articles/ \
+    -jsonl data/02_intermediate/news-articles.jsonl
+    """
+    import argparse
+    import logging
+
+    logging.basicConfig(level=logging.INFO)
+    log = logging.getLogger(__name__)
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-jsons",
+        "--path_dir_json",
+        type=Path,
+        help="Path to the directory with news article json files",
+        required=True,
+    )
+    parser.add_argument(
+        "-jsonl",
+        "--path_jsonl",
+        type=Path,
+        help="Path to the jsonl file that will be created",
+        required=True,
+    )
+
+    args = parser.parse_args()
+
+    paths_json: List[Path] = list(args.path_dir_json.iterdir())
+    jsons_to_jsonl(paths_json=paths_json, path_jsonl=args.path_jsonl)

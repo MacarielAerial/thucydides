@@ -6,7 +6,7 @@ line-length = 88
 
 [tool.pytest.ini_options]
 testpaths = "tests"
-addopts = "--cov=thucydides --cov-branch --cov-report=html --cov-report=term-missing:skip-covered --cov-report=xml --no-cov-on-fail --junitxml=test_report.xml --cov-fail-under=20"
+addopts = "--cov=thucydides --cov-branch --cov-report=html --cov-report=term-missing:skip-covered --cov-report=xml --no-cov-on-fail --junitxml=test_report.xml --cov-config=.coveragerc"
 
 [tool.mypy]
 disallow_untyped_defs = true
