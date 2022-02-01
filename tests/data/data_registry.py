@@ -20,6 +20,7 @@ PATH_NEWS_JSONL_UNTYPED_SA: Path = (
     / "news_jsonl_untyped_first_10.jsonl"
 )
 PATH_NEWS_JSONL_UNTYPED_TS: Path = PATH_NEWS_JSONL_UNTYPED_SA  # Identical for now
+PATH_NEWS_JSONL_UNTYPED_ZC: Path = PATH_NEWS_JSONL_UNTYPED_SA  # Identical for now
 
 # NewsJSONL
 PATH_NEWS_JSONL_OUTPUT: Path = Path("tests") / "data" / "output" / "news_jsonl.json"
@@ -30,6 +31,9 @@ PATH_PANDAS_JSON_OUTPUT: Path = Path("tests") / "data" / "output" / "pandas_json
 PATH_PANDAS_JSON: Path = Path("tests") / "data" / "unit" / "pandas_json.json"
 PATH_PANDAS_JSON_SA_OUTPUT: Path = (
     Path("tests") / "data" / "output" / "pandas_json_sentiment_analysis.json"
+)
+PATH_PANDAS_JSON_ZC_OUTPUT: Path = (
+    Path("tests") / "data" / "output" / "pandas_json_zero_shot_classification.json"
 )
 
 # TextSummaries

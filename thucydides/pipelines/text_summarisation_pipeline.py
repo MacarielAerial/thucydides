@@ -4,7 +4,7 @@ Singles out parts to serve as summary of the whole
 
 import logging
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from transformers import pipeline
 

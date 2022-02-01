@@ -4,11 +4,10 @@ Conducts topic modelling
 
 import logging
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 import pandas as pd
 from pandas import DataFrame
-import torch
 from transformers import pipeline
 
 from thucydides.datasets.news_jsonl_dataset import NewsJSONL
@@ -21,13 +20,13 @@ from thucydides.datasets.zero_shot_classifiation_config_dataset import (
 log = logging.getLogger(__name__)
 
 
-def _zero_shot_classification_pipeline(
+def _zero_shot_classification_pipeline(  # type: ignore[no-any-unimported]
     news_jsonl: NewsJSONL, zero_shot_classifiation_config: ZeroShotClassificationConfig
 ) -> DataFrame:
     """In-memory handler"""
     # Initiate classifier
     classifier = pipeline(
-        zero_shot_classifiation_config.summariser_config.pipeline_task.value
+        zero_shot_classifiation_config.classifier_config.pipeline_task.value
     )
 
     # Estimate a topic label for each article
@@ -44,10 +43,14 @@ def _zero_shot_classification_pipeline(
         list_text.append(text)
 
         # Persist label
-        result: List[Dict[str, Any]] = classifier(text, zero_shot_classifiation_config.classifier_config.candidate_labels)
-        topic_label: str = result[0]["labels"][int(
-            torch.argmax(result[0]["scores"])
-        )]  # Convoluted logic. Should be broken apart in refactor
+        result: Dict[str, Any] = classifier(
+            text,
+            zero_shot_classifiation_config.classifier_config.candidate_labels,
+            multi_label=zero_shot_classifiation_config.classifier_config.multi_label,
+        )
+        topic_label: str = (
+            result["labels"][0] if result["scores"][0] > 0.5 else "unclassified"
+        )
         list_topic_label.append(topic_label)
 
     log.info(f"Estimated topic labels for {len(list_topic_label)} entries")
@@ -58,7 +61,10 @@ def _zero_shot_classification_pipeline(
     )
 
     # Post process output structure to encode topic labels
-    df = pd.concat(pd.get_dummies(df["topic_label"]), axis=0)
+    df = pd.concat([df, pd.get_dummies(df["topic_label"])], axis=1)
+
+    # Log descriptive statistis
+    log.info(f"Descriptive statistics for topic labels:\n{df.describe()}")
 
     return df
 
@@ -73,13 +79,13 @@ def zero_shot_classification_pipeline(
         path_news_jsonl_untyped=path_news_jsonl_untyped
     )
     zero_shot_classification_config = ZeroShotClassificationConfig(
-        classifier_config=ClassifierConfig(candidate_labels=["ESG", "not ESG"],
-                                           hypothesis_template="The topic of this article is {}.")
+        classifier_config=ClassifierConfig()
     )  # Use default setting at the moment
 
     # Task Processing
     df = _zero_shot_classification_pipeline(
-        news_jsonl=news_jsonl, zero_shot_classifiation_config=zero_shot_classification_config
+        news_jsonl=news_jsonl,
+        zero_shot_classifiation_config=zero_shot_classification_config,
     )
 
     # Data Access - Output
