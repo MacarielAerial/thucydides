@@ -33,6 +33,10 @@ PATH_PANDAS_JSON_SA_OUTPUT: Path = (
 )
 
 # TextSummaries
+PATH_TEXT_SUMMARIES_OUTPUT: Path = (
+    Path("tests") / "data" / "output" / "text_summaries.json"
+)
+PATH_TEXT_SUMMARIES: Path = Path("tests") / "data" / "unit" / "text_summaries.json"
 PATH_TEXT_SUMMARIES_TS_OUTPUT: Path = (
     Path("tests") / "data" / "output" / "text_summaries_text_summarisation.json"
 )
