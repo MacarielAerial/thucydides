@@ -30,7 +30,7 @@ class NewsJSONLDataSet:
             data = json.load(f)
             news_jsonl = NewsJSONL.from_dict(data)  # type: ignore
 
-            log.info(f"Loaded a {NewsJSONL.__class__} object from {filepath}")
+            log.info(f"Loaded a {type(news_jsonl)} object from {filepath}")
 
             return news_jsonl  # type: ignore
 
@@ -43,7 +43,7 @@ class NewsJSONLDataSet:
             data = news_jsonl.to_dict()  # type: ignore
             json.dump(data, f)
 
-            log.info(f"Saved a {NewsJSONL.__class__} object to {filepath}")
+            log.info(f"Saved a {type(news_jsonl)} object to {filepath}")
 
 
 @dataclass_json
@@ -82,9 +82,26 @@ class NewsJSONL:
             news_jsonl.list_news_json.append(news_json)
 
         log.info(
-            f"Initiated a {NewsJSONL.__class__} object with "
-            f"{len(news_jsonl.list_news_json)} {NewsJSON.__class__} objects "
+            f"Initiated a {type(news_jsonl)} object with "
+            f"{len(news_jsonl.list_news_json)} {type(news_jsonl)} objects "
             f"from a list of dictionaries loaded from a jsonl file"
+        )
+
+        return news_jsonl
+
+    @classmethod
+    def from_path_news_jsonl_untyped(cls, path_news_jsonl_untyped: Path) -> NewsJSONL:
+        # Load raw jsonl
+        news_jsonl_untyped: List[Dict[str, Any]] = []
+        with open(path_news_jsonl_untyped, "r") as f:
+            json_list = list(f)
+            for json_str in json_list:
+                news_jsonl_untyped.append(json.loads(json_str))
+        log.info(f"Loaded raw JSONL object from {path_news_jsonl_untyped}")
+
+        # Convert into typed object
+        news_jsonl = NewsJSONL.from_news_jsonl_untyped(
+            news_jsonl_untyped=news_jsonl_untyped
         )
 
         return news_jsonl

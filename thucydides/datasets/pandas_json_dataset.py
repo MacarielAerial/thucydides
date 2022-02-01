@@ -24,10 +24,9 @@ class PandasJsonDataSet:
     @staticmethod
     def _load(filepath: Path) -> DataFrame:  # type: ignore
         with open(filepath, "r") as f:
-
-            log.info(f"Loaded a {DataFrame.__class__} object from {filepath}")
-
             df = pd.read_json(f)
+
+            log.info(f"Loaded a {type(df)} object from {filepath}")
 
             return df
 
@@ -38,4 +37,4 @@ class PandasJsonDataSet:
     def _save(filepath: Path, df: DataFrame) -> None:  # type: ignore
         df.to_json(filepath)
 
-        log.info(f"Saved a {DataFrame.__class__} object to {filepath}")
+        log.info(f"Saved a {type(df)} object to {filepath}")
