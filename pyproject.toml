@@ -6,6 +6,10 @@ line-length = 88
 
 [tool.pytest.ini_options]
 testpaths = "tests"
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 addopts = "--cov=thucydides --cov-branch --cov-report=html --cov-report=term-missing:skip-covered --cov-report=xml --no-cov-on-fail --junitxml=test_report.xml --cov-config=.coveragerc"
 
 [tool.mypy]
@@ -18,5 +22,11 @@ warn_unused_ignores = true
 show_error_codes = true
 
 [[tool.mypy.overrides]]
-module = "pandas"
+module = 'pandas'
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = 'transformers.trainer.*'
+follow_imports = 'skip'
+ignore_missing_imports = true
+
