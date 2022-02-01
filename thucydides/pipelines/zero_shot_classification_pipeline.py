@@ -63,7 +63,7 @@ def _zero_shot_classification_pipeline(  # type: ignore[no-any-unimported]
     # Log descriptive statistis
     log.info(
         f"Descriptive statistics for topic labels:\n"
-        f"{df['topic_labels'].value_counts(normalize=True)}"
+        f"{df['topic_label'].value_counts(normalize=True)}"
     )
 
     # Post process output structure to encode topic labels
