@@ -60,11 +60,14 @@ def _zero_shot_classification_pipeline(  # type: ignore[no-any-unimported]
         {"id": list_id, "text": list_text, "topic_label": list_topic_label}
     )
 
+    # Log descriptive statistis
+    log.info(
+        f"Descriptive statistics for topic labels:\n"
+        f"{df['topic_labels'].value_counts(normalize=True)}"
+    )
+
     # Post process output structure to encode topic labels
     df = pd.concat([df, pd.get_dummies(df["topic_label"])], axis=1)
-
-    # Log descriptive statistis
-    log.info(f"Descriptive statistics for topic labels:\n{df.describe()}")
 
     return df
 

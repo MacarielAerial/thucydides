@@ -69,7 +69,10 @@ def _sentiment_analysis_pipeline(  # type: ignore[no-any-unimported]
     )
 
     # Log descriptive statistis
-    log.info(f"Descriptive statistics for sentiment scores:\n{df.describe()}")
+    log.info(
+        f"Descriptive statistics for sentiment scores:\n"
+        f"{df['sentiment_score'].value_counts(normalize=True)}"
+    )
 
     return df
 
