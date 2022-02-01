@@ -4,7 +4,7 @@ Singles out parts to serve as summary of the whole
 
 import logging
 from pathlib import Path
-from typing import List
+from typing import List, Dict, Any
 
 from transformers import pipeline
 
@@ -36,13 +36,14 @@ def _text_summarisation_pipeline(
     for news_json in news_jsonl.list_news_json:
         id = news_json.id  # Primary key to identify each article
         text = news_json.body  # Only use article body at the moment
-        summary: str = summariser(
+        result: List[Dict[str, Any]] = summariser(
             text,
             max_length=text_summarisation_config.summariser_config.max_length,
             min_length=text_summarisation_config.summariser_config.min_length,
             do_sample=text_summarisation_config.summariser_config.do_sample,
             truncation=text_summarisation_config.summariser_config.truncation,
-        )[0][
+        )
+        summary: str = result[0][
             "summary_text"
         ]  # Hard coding should be replaced in the future
 

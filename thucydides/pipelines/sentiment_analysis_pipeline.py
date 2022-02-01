@@ -42,21 +42,25 @@ def _sentiment_analysis_pipeline(  # type: ignore[no-any-unimported]
     )
     log.info(f"Loaded model of class {model.__class__}")
 
-    # Gather input structure
-    list_text: List[str] = [news_json.body for news_json in news_jsonl.list_news_json]
-
     # Compute a sentiment score for each article
     list_id: List[str] = []
+    list_text: List[str] = []
     list_sentiment_score: List[int] = []
     for news_json in news_jsonl.list_news_json:
+        # Persist id
         id = news_json.id  # Primary key to identify each article
         list_id.append(id)
 
+        # Persist text
         text = news_json.body  # Only use article body at the moment
+        list_text.append(text)
+
+        # Persist score
         tokens = tokeniser.encode(text, return_tensors="pt", truncation=True)
         result = model(tokens)
         sentiment_score = int(torch.argmax(result.logits)) + 1
         list_sentiment_score.append(sentiment_score)
+
     log.info(f"Computed sentiment scores for {len(list_sentiment_score)} entries")
 
     # Compile output structure
