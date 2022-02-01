@@ -1,3 +1,7 @@
+"""
+Detects sentiments (i.e. positive | negative)
+"""
+
 import logging
 from pathlib import Path
 from typing import List

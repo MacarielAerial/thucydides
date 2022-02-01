@@ -1,3 +1,7 @@
+"""
+Singles out parts to serve as summary of the whole
+"""
+
 import logging
 from pathlib import Path
 from typing import List
