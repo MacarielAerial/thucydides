@@ -25,6 +25,7 @@ PATH_NEWS_JSONL_UNTYPED_ZC: Path = PATH_NEWS_JSONL_UNTYPED_SA  # Identical for n
 # NewsJSONL
 PATH_NEWS_JSONL_OUTPUT: Path = Path("tests") / "data" / "output" / "news_jsonl.json"
 PATH_NEWS_JSONL: Path = Path("tests") / "data" / "unit" / "news_jsonl.json"
+PATH_NEWS_JSONL_NTI: Path = PATH_NEWS_JSONL  # Identical for now
 
 # DataFrame
 PATH_PANDAS_JSON_OUTPUT: Path = Path("tests") / "data" / "output" / "pandas_json.json"

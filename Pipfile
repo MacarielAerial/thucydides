@@ -4,12 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-spacy = "*"
 dataclasses-json = "*"
 torch = "*"
 transformers = "*"
 pandas = "*"
 numpy = "*"
+networkx = "*"
+networkx-query = "*"
 
 [dev-packages]
 black = "==21.12b0"
