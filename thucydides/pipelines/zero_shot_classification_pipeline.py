@@ -94,3 +94,35 @@ def zero_shot_classification_pipeline(
     # Data Access - Output
     pandas_json_dataset = PandasJsonDataSet(filepath=path_pandas_json)
     pandas_json_dataset.save(df=df)
+
+
+if __name__ == "__main__":
+    import argparse
+    import logging
+
+    logging.basicConfig(level=logging.INFO)
+
+    parser = argparse.ArgumentParser(
+        description="Conducts topic modelling on news articles"
+    )
+    parser.add_argument(
+        "-nju",
+        "--path_news_jsonl_untyped",
+        help="Path to an untyped news jsonl object",
+        type=Path,
+        required=True,
+    )
+    parser.add_argument(
+        "-pj",
+        "--path_pandas_json",
+        help="Path to pandas dataframe",
+        type=Path,
+        required=True,
+    )
+
+    args = parser.parse_args()
+
+    zero_shot_classification_pipeline(
+        path_news_jsonl_untyped=args.path_news_jsonl_untyped,
+        path_pandas_json=args.path_pandas_json,
+    )
