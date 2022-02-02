@@ -74,7 +74,9 @@ class NewsJSONL:
         for news_json_untyped in news_jsonl_untyped:
             news_json = NewsJSON(
                 id=news_json_untyped["id"],
-                source=news_json_untyped["source"],
+                source=news_json_untyped.get(
+                    "source", "Unknown"
+                ),  # Not already present in input
                 publish_date=news_json_untyped["publishDate"],
                 title=news_json_untyped["title"],
                 body=news_json_untyped["body"],
@@ -94,9 +96,8 @@ class NewsJSONL:
         # Load raw jsonl
         news_jsonl_untyped: List[Dict[str, Any]] = []
         with open(path_news_jsonl_untyped, "r") as f:
-            json_list = list(f)
-            for json_str in json_list:
-                news_jsonl_untyped.append(json.loads(json_str))
+            for jline in f.readlines():
+                news_jsonl_untyped.append(json.loads(jline))
         log.info(f"Loaded raw JSONL object from {path_news_jsonl_untyped}")
 
         # Convert into typed object

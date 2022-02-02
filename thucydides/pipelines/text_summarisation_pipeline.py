@@ -79,3 +79,35 @@ def text_summarisation_pipeline(
     # Data Access - Output
     text_summaries_dataset = TextSummariesDataSet(filepath=path_text_summaries)
     text_summaries_dataset.save(text_summaries=text_summaries)
+
+
+if __name__ == "__main__":
+    import argparse
+    import logging
+
+    logging.basicConfig(level=logging.INFO)
+
+    parser = argparse.ArgumentParser(
+        description="Derives summaries for input news articles"
+    )
+    parser.add_argument(
+        "-nju",
+        "--path_news_jsonl_untyped",
+        help="Path to an untyped news jsonl object",
+        type=Path,
+        required=True,
+    )
+    parser.add_argument(
+        "-ts",
+        "--path_text_summaries",
+        help="Path to a text summaries object",
+        type=Path,
+        required=True,
+    )
+
+    args = parser.parse_args()
+
+    text_summarisation_pipeline(
+        path_news_jsonl_untyped=args.path_news_jsonl_untyped,
+        path_text_summaries=args.path_text_summaries,
+    )
