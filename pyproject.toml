@@ -30,3 +30,10 @@ module = 'transformers.trainer.*'
 follow_imports = 'skip'
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = 'networkx'
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = 'networkx_query'
+ignore_missing_imports = true

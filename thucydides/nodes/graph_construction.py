@@ -17,7 +17,9 @@ from thucydides.datasets.news_jsonl_dataset import NewsJSONL
 log = logging.getLogger(__name__)
 
 
-def news_jsonl_to_info_graph(news_jsonl: NewsJSONL) -> DiGraph:
+def news_jsonl_to_info_graph(  # type: ignore[no-any-unimported]
+    news_jsonl: NewsJSONL,
+) -> DiGraph:
     """Converts a NewsJSONL object into DiGraph object
     with minimal loss of information"""
     # Initiate a global node id counter
@@ -81,7 +83,7 @@ def news_jsonl_to_info_graph(news_jsonl: NewsJSONL) -> DiGraph:
     log.info(f"In total, {len(nodes)} nodes are parsed from {type(news_jsonl)} object")
 
     # Construct the edgeless graph
-    nx_g: DiGraph = DiGraph()
+    nx_g: DiGraph = DiGraph()  # type: ignore[no-any-unimported]
     nx_g.add_nodes_from(nodes)
 
     # Parse edges of different types into graph
@@ -123,15 +125,7 @@ def news_jsonl_to_info_graph(news_jsonl: NewsJSONL) -> DiGraph:
         #
         # Search node of type article
         #
-        query = {
-            "and": [
-                {"==": [(AttributeName.node_type.value,), NodeType.article.value]},
-                {"==": [(AttributeName.id.value,), news_json.id]},
-            ]
-        }
-        print(query)
-        print(nx_g.nodes.data())
-        query_result: List[int] = list(
+        query_result = list(
             search_nodes(
                 graph=nx_g,
                 query={

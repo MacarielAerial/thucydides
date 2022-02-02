@@ -96,24 +96,24 @@ class InfoGraphDataSet:
         if not filepath.is_file():
             raise ValueError(f"{filepath} is not a file")
 
-    def load(self) -> DiGraph:
+    def load(self) -> DiGraph:  # type: ignore[no-any-unimported]
         return self._load(filepath=self.filepath)
 
     @staticmethod
-    def _load(filepath: Path) -> DiGraph:
+    def _load(filepath: Path) -> DiGraph:  # type: ignore[no-any-unimported]
         with open(filepath, "r") as f:
             data = json.load(f)
-            nx_g: DiGraph = nx.node_link_graph(data)
+            nx_g: DiGraph = nx.node_link_graph(data)  # type: ignore[no-any-unimported]
 
             log.info(f"Loaded a {type(nx_g)} object from {filepath}")
 
             return nx_g
 
-    def save(self, nx_g: DiGraph) -> None:
+    def save(self, nx_g: DiGraph) -> None:  # type: ignore[no-any-unimported]
         self._save(filepath=self.filepath, nx_g=nx_g)
 
     @staticmethod
-    def _save(filepath: Path, nx_g: DiGraph) -> None:
+    def _save(filepath: Path, nx_g: DiGraph) -> None:  # type: ignore[no-any-unimported]
         with open(filepath, "w") as f:
             data = nx.node_link_data(nx_g)
 
