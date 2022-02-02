@@ -45,3 +45,11 @@ PATH_TEXT_SUMMARIES: Path = Path("tests") / "data" / "unit" / "text_summaries.js
 PATH_TEXT_SUMMARIES_TS_OUTPUT: Path = (
     Path("tests") / "data" / "output" / "text_summaries_text_summarisation.json"
 )
+
+
+# InfoGraph
+PATH_INFO_GRAPH_OUTPUT: Path = Path("tests") / "data" / "output" / "info_graph.json"
+PATH_INFO_GRAPH: Path = Path("tests") / "data" / "unit" / "info_graph.json"
+PATH_INFO_GRAPH_GC_OUTPUT: Path = (
+    Path("tests") / "data" / "output" / "info_graph_graph_construction.json"
+)
